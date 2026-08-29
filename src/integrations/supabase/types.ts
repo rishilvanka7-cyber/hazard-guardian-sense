@@ -14,7 +14,81 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      anomaly_pings: {
+        Row: {
+          created_at: string
+          device_id: string
+          id: string
+          intensity: number
+          lat: number
+          long: number
+        }
+        Insert: {
+          created_at?: string
+          device_id: string
+          id?: string
+          intensity?: number
+          lat: number
+          long: number
+        }
+        Update: {
+          created_at?: string
+          device_id?: string
+          id?: string
+          intensity?: number
+          lat?: number
+          long?: number
+        }
+        Relationships: []
+      }
+      hazard_zones: {
+        Row: {
+          city_name: string
+          created_at: string
+          id: string
+          lat: number
+          long: number
+          population: number
+          radius_meters: number
+          risk_explanation: string
+          risk_tier: string
+          safe_zone_capacity: number
+          safe_zone_lat: number
+          safe_zone_long: number
+          safe_zone_name: string
+        }
+        Insert: {
+          city_name: string
+          created_at?: string
+          id?: string
+          lat: number
+          long: number
+          population: number
+          radius_meters?: number
+          risk_explanation: string
+          risk_tier: string
+          safe_zone_capacity: number
+          safe_zone_lat: number
+          safe_zone_long: number
+          safe_zone_name: string
+        }
+        Update: {
+          city_name?: string
+          created_at?: string
+          id?: string
+          lat?: number
+          long?: number
+          population?: number
+          radius_meters?: number
+          risk_explanation?: string
+          risk_tier?: string
+          safe_zone_capacity?: number
+          safe_zone_lat?: number
+          safe_zone_long?: number
+          safe_zone_name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
