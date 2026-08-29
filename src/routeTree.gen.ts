@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RiskCityRouteImport } from './routes/risk.$city'
+import { Route as SentinelCityRouteImport } from './routes/sentinel.$city'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RiskCityRoute = RiskCityRouteImport.update({
+  id: '/risk/$city',
+  path: '/risk/$city',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SentinelCityRoute = SentinelCityRouteImport.update({
+  id: '/sentinel/$city',
+  path: '/sentinel/$city',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/risk/$city': typeof RiskCityRoute
+  '/sentinel/$city': typeof SentinelCityRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/risk/$city': typeof RiskCityRoute
+  '/sentinel/$city': typeof SentinelCityRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/risk/$city': typeof RiskCityRoute
+  '/sentinel/$city': typeof SentinelCityRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/risk/$city' | '/sentinel/$city'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/risk/$city' | '/sentinel/$city'
+  id: '__root__' | '/' | '/risk/$city' | '/sentinel/$city'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RiskCityRoute: typeof RiskCityRoute
+  SentinelCityRoute: typeof SentinelCityRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/risk/$city': {
+      id: '/risk/$city'
+      path: '/risk/$city'
+      fullPath: '/risk/$city'
+      preLoaderRoute: typeof RiskCityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sentinel/$city': {
+      id: '/sentinel/$city'
+      path: '/sentinel/$city'
+      fullPath: '/sentinel/$city'
+      preLoaderRoute: typeof SentinelCityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RiskCityRoute: RiskCityRoute,
+  SentinelCityRoute: SentinelCityRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
