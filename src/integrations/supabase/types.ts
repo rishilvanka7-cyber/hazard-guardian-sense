@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      alerts: {
+        Row: {
+          area: string
+          city_name: string
+          created_at: string
+          description: string
+          expires_at: string | null
+          hazard_type: string
+          headline: string
+          id: string
+          issued_at: string
+          severity: string
+          source: string
+        }
+        Insert: {
+          area: string
+          city_name: string
+          created_at?: string
+          description: string
+          expires_at?: string | null
+          hazard_type: string
+          headline: string
+          id?: string
+          issued_at?: string
+          severity: string
+          source?: string
+        }
+        Update: {
+          area?: string
+          city_name?: string
+          created_at?: string
+          description?: string
+          expires_at?: string | null
+          hazard_type?: string
+          headline?: string
+          id?: string
+          issued_at?: string
+          severity?: string
+          source?: string
+        }
+        Relationships: []
+      }
       anomaly_pings: {
         Row: {
           created_at: string
@@ -88,6 +130,116 @@ export type Database = {
           safe_zone_name?: string
         }
         Relationships: []
+      }
+      helplines: {
+        Row: {
+          category: string
+          id: string
+          name: string
+          number: string
+          region: string | null
+          sort_order: number
+        }
+        Insert: {
+          category: string
+          id?: string
+          name: string
+          number: string
+          region?: string | null
+          sort_order?: number
+        }
+        Update: {
+          category?: string
+          id?: string
+          name?: string
+          number?: string
+          region?: string | null
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      risk_explanation_translations: {
+        Row: {
+          explanation_text: string
+          hazard_zone_id: string
+          id: string
+          language_code: string
+        }
+        Insert: {
+          explanation_text: string
+          hazard_zone_id: string
+          id?: string
+          language_code: string
+        }
+        Update: {
+          explanation_text?: string
+          hazard_zone_id?: string
+          id?: string
+          language_code?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "risk_explanation_translations_hazard_zone_id_fkey"
+            columns: ["hazard_zone_id"]
+            isOneToOne: false
+            referencedRelation: "hazard_zones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_preferences: {
+        Row: {
+          created_at: string
+          home_location_id: string | null
+          id: string
+          notify_email: boolean
+          notify_push: boolean
+          notify_sms: boolean
+          preferred_language: string
+          subscribed_locations: string[]
+          updated_at: string
+          work_location_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          home_location_id?: string | null
+          id: string
+          notify_email?: boolean
+          notify_push?: boolean
+          notify_sms?: boolean
+          preferred_language?: string
+          subscribed_locations?: string[]
+          updated_at?: string
+          work_location_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          home_location_id?: string | null
+          id?: string
+          notify_email?: boolean
+          notify_push?: boolean
+          notify_sms?: boolean
+          preferred_language?: string
+          subscribed_locations?: string[]
+          updated_at?: string
+          work_location_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_preferences_home_location_id_fkey"
+            columns: ["home_location_id"]
+            isOneToOne: false
+            referencedRelation: "hazard_zones"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_preferences_work_location_id_fkey"
+            columns: ["work_location_id"]
+            isOneToOne: false
+            referencedRelation: "hazard_zones"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
